@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Cantico - Leggio Liturgico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- BARRA LATERALE (SIDEBAR) -->
+    <aside class="sidebar" id="sidebar">
+      <header class="sidebar-header">
+        <div class="brand">
+          <svg class="icon-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+          </svg>
+          <h1>Cantico</h1>
+        </div>
+        <button id="btn-new-song" class="btn-primary-icon" title="Nuovo Brano">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Area Ricerca e Filtro Rapido Preferiti -->
+      <div class="search-container">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="search" id="search-input" placeholder="Cerca titolo o numero...">
+        </div>
+        <button id="filter-favorites" class="btn-filter" title="Mostra preferiti">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-star">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          <span>Preferiti</span>
+        </button>
+      </div>
+
+      <!-- Filtro Momenti della Messa -->
+      <section class="liturgy-moments-section">
+        <h3>Momenti Liturgici</h3>
+        <div class="moments-grid" id="moments-filter-grid">
+          <!-- Popolato dinamicamente da app.js -->
+        </div>
+      </section>
+
+      <!-- Lista dei Canti -->
+      <section class="songs-list-section">
+        <div class="list-header">
+          <span id="songs-count">0 brani</span>
+          <button id="btn-reset-filters" class="btn-text" style="display: none;">Azzera filtri</button>
+        </div>
+        <div class="songs-list" id="songs-list">
+          <!-- Popolato dinamicamente da app.js -->
+          <div class="list-empty">Caricamento in corso...</div>
+        </div>
+      </section>
+
+      <!-- Footer della Sidebar per backup/utility -->
+      <footer class="sidebar-footer">
+        <button id="btn-backup-export" class="btn-sidebar-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Esporta ZIP
+        </button>
+        <button id="btn-backup-import-trigger" class="btn-sidebar-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Importa ZIP
+        </button>
+        <input type="file" id="backup-import-file" accept=".zip" style="display: none;">
+      </footer>
+    </aside>
+
+    <!-- PANNELLO DETTAGLIO / CONTENUTO -->
+    <main class="main-content">
+      
+      <!-- SCHERMATA LEGGIO (VIEW MODE) -->
+      <article class="view-panel" id="view-panel">
+        
+        <!-- Intestazione Canto -->
+        <header class="song-header">
+          <button id="btn-toggle-sidebar" class="btn-toggle-sidebar" title="Mostra/Nascondi lista">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          
+          <div class="song-identity">
+            <div class="title-row">
+              <span class="song-number-badge" id="view-song-number">--</span>
+              <h2 id="view-song-title">Seleziona un brano</h2>
+              <button id="btn-toggle-favorite" class="btn-favorite-toggle" title="Aggiungi ai preferiti" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-star">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </button>
+            </div>
+            <div class="song-meta">
+              <span class="song-desc" id="view-song-desc">Scegli un brano liturgico dalla lista a sinistra per iniziare a suonare.</span>
+              <div class="song-moments-badges" id="view-song-moments">
+                <!-- Badges dei momenti -->
+              </div>
+            </div>
+          </div>
+
+          <div class="song-actions">
+            <button id="btn-edit-song" class="btn-secondary" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+              Modifica
+            </button>
+          </div>
+        </header>
+
+        <!-- Barra degli Strumenti Esecuzione (Leggio Toolbar) -->
+        <section class="leggio-toolbar" id="leggio-toolbar" style="display: none;">
+          <!-- Visualizzazione Toggle (Testo vs Spartito) -->
+          <div class="toolbar-group toggle-view-group">
+            <button id="tab-lyrics" class="tab-btn active">Testo e Accordi</button>
+            <button id="tab-sheet" class="tab-btn">Spartito (Foto)</button>
+          </div>
+
+          <!-- Trasposizione -->
+          <div class="toolbar-group transpose-group">
+            <label>Tonalità</label>
+            <div class="counter-control">
+              <button id="btn-transpose-down" class="btn-counter">-</button>
+              <span id="transpose-value" class="counter-value">0</span>
+              <button id="btn-transpose-up" class="btn-counter">+</button>
+            </div>
+          </div>
+
+          <!-- Zoom del testo -->
+          <div class="toolbar-group zoom-group">
+            <label>Dimensione</label>
+            <div class="zoom-controls">
+              <button id="btn-zoom-out" class="btn-zoom">A-</button>
+              <input type="range" id="zoom-slider" min="12" max="32" value="18" step="1">
+              <button id="btn-zoom-in" class="btn-zoom">A+</button>
+            </div>
+          </div>
+
+          <!-- Autoscroll -->
+          <div class="toolbar-group autoscroll-group">
+            <button id="btn-autoscroll-play" class="btn-play">
+              <svg class="icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <svg class="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+              </svg>
+              <span>Scorri</span>
+            </button>
+            <input type="range" id="scroll-speed" min="1" max="10" value="3" title="Velocità scorrimento">
+          </div>
+
+          <!-- Layout Colonne -->
+          <div class="toolbar-group layout-group">
+            <button id="btn-toggle-columns" class="btn-secondary" title="Visualizza su due colonne" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="18" rx="1"></rect>
+                <rect x="14" y="3" width="7" height="18" rx="1"></rect>
+              </svg>
+              <span>2 Colonne</span>
+            </button>
+          </div>
+
+          <!-- Schermo Intero -->
+          <div class="toolbar-group fullscreen-group">
+            <button id="btn-toolbar-fullscreen" class="btn-secondary" title="Schermo Intero" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+              </svg>
+              <span>Schermo Intero</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- Area Contenuto Spartito/Testo -->
+        <div class="leggio-viewport" id="leggio-viewport">
+          
+          <!-- Area Testo e Accordi -->
+          <div class="song-sheet-lyrics" id="song-sheet-lyrics" style="display: none;">
+            <div class="lyrics-render" id="lyrics-render"></div>
+          </div>
+
+          <!-- Area Spartito (Immagine) -->
+          <div class="song-sheet-image" id="song-sheet-image" style="display: none;">
+            <div class="image-zoom-container" id="sheet-zoom-container">
+              <img id="sheet-image-element" src="" alt="Spartito musicale">
+            </div>
+            <div class="sheet-no-image" id="sheet-no-image-message">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              <p>Nessuno spartito caricato per questo brano.</p>
+              <button id="btn-go-edit-upload" class="btn-text-action">Aggiungi foto spartito</button>
+            </div>
+          </div>
+
+          <!-- Schermata di Benvenuto iniziale -->
+          <div class="welcome-screen" id="welcome-screen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="welcome-icon">
+              <path d="M9 18V5l12-2v13"></path>
+              <circle cx="6" cy="18" r="3"></circle>
+              <circle cx="18" cy="16" r="3"></circle>
+              <path d="M3 10h10M3 14h18M3 6h18"></path>
+            </svg>
+            <h2>Cantico Leggio Liturgico</h2>
+            <p>Seleziona un brano a sinistra per iniziare, oppure creane uno nuovo per la tua raccolta liturgica.</p>
+            <div class="welcome-actions">
+              <button id="btn-welcome-create" class="btn-primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:6px;vertical-align:middle;">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Crea Primo Brano
+              </button>
+              <button id="btn-welcome-import" class="btn-secondary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:6px;vertical-align:middle;">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Importa Backup (.zip)
+              </button>
+              <button id="btn-welcome-export" class="btn-secondary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:6px;vertical-align:middle;">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                Esporta Backup (.zip)
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- SCHERMATA CREAZIONE / MODIFICA (EDIT MODE) -->
+      <section class="edit-panel" id="edit-panel" style="display: none;">
+        <header class="edit-header">
+          <h2 id="edit-panel-title">Nuovo Brano</h2>
+          <div class="edit-header-actions">
+            <button id="btn-edit-cancel" class="btn-outline">Annulla</button>
+            <button id="btn-edit-save" class="btn-primary">Salva</button>
+          </div>
+        </header>
+
+        <form class="edit-form" id="edit-form" onsubmit="return false;">
+          <!-- Informazioni Generali -->
+          <div class="form-row split">
+            <div class="form-group flex-2">
+              <label for="edit-title">Titolo *</label>
+              <input type="text" id="edit-title" required placeholder="Es. Alleluia (Irlandese)">
+            </div>
+            <div class="form-group flex-1">
+              <label for="edit-number">Numero Libretto</label>
+              <input type="number" id="edit-number" placeholder="Es. 124">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-desc">Descrizione Breve / Note d'Esecuzione</label>
+            <input type="text" id="edit-desc" placeholder="Es. Lento, arpeggiato. Ottimo per la comunione o l'ingresso.">
+          </div>
+
+          <!-- Associazione Momenti Liturgici -->
+          <div class="form-group">
+            <label>Momenti Liturgici (Associa a uno o più momenti)</label>
+            <div class="edit-moments-selector" id="edit-moments-selector">
+              <!-- Popolato dinamicamente da app.js con checkbox colorate -->
+            </div>
+          </div>
+
+          <!-- Caricamento Spartito (Immagine) -->
+          <div class="form-group">
+            <label>Foto Spartito</label>
+            <div class="sheet-upload-area" id="sheet-upload-area">
+              <div class="upload-placeholder" id="upload-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <p>Trascina un'immagine dello spartito qui o <span>sfoglia i file</span></p>
+                <span class="upload-tip">Supportato: JPG, PNG (Max 5MB)</span>
+              </div>
+              <input type="file" id="edit-sheet-file" accept="image/*" style="display: none;">
+              <div class="upload-preview" id="upload-preview" style="display: none;">
+                <img id="upload-preview-img" src="" alt="Anteprima spartito">
+                <button type="button" id="btn-remove-sheet" class="btn-danger-floating" title="Rimuovi spartito">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Editor Testo e Accordi (ChordPro) -->
+          <div class="form-group editor-chordpro-group">
+            <div class="editor-label-row">
+              <label for="edit-lyrics">Testo e Accordi (Formato ChordPro)</label>
+              <span class="help-tip" title="Scrivi gli accordi tra parentesi quadre prima della sillaba. Esempio: [Do]Al[Sol]leluia">Aiuto sintassi</span>
+            </div>
+
+            <!-- Tastiera Virtuale Accordi Rapidi -->
+            <div class="chords-keyboard" id="chords-keyboard">
+              <div class="keyboard-row">
+                <span class="kbd-label">Base:</span>
+                <button type="button" class="kbd-btn" data-val="Do">Do</button>
+                <button type="button" class="kbd-btn" data-val="Re">Re</button>
+                <button type="button" class="kbd-btn" data-val="Mi">Mi</button>
+                <button type="button" class="kbd-btn" data-val="Fa">Fa</button>
+                <button type="button" class="kbd-btn" data-val="Sol">Sol</button>
+                <button type="button" class="kbd-btn" data-val="La">La</button>
+                <button type="button" class="kbd-btn" data-val="Si">Si</button>
+              </div>
+              <div class="keyboard-row">
+                <span class="kbd-label">Modificatori:</span>
+                <button type="button" class="kbd-btn modifier" data-val="m" title="Minore">m</button>
+                <button type="button" class="kbd-btn modifier" data-val="7" title="Settima">7</button>
+                <button type="button" class="kbd-btn modifier" data-val="maj7" title="Major 7">maj7</button>
+                <button type="button" class="kbd-btn modifier" data-val="4" title="Sospesa 4">sus4</button>
+                <button type="button" class="kbd-btn modifier" data-val="9" title="Nona">9</button>
+                <button type="button" class="kbd-btn modifier" data-val="#" title="Diesis">#</button>
+                <button type="button" class="kbd-btn modifier" data-val="b" title="Bemolle">b</button>
+                <button type="button" class="kbd-btn modifier" data-val="/" title="Basso alternativo (es. /Sol)">/</button>
+              </div>
+              <div class="keyboard-row formatting-row">
+                <span class="kbd-label">Strumenti:</span>
+                <button type="button" id="btn-kbd-brackets" class="kbd-btn tool" title="Inserisci parentesi quadre []">[]</button>
+                <button type="button" id="btn-kbd-chorus" class="kbd-btn tool" title="Inserisci blocco Ritornello">{Ritornello}</button>
+                <button type="button" id="btn-kbd-clear" class="kbd-btn tool danger" title="Cancella tutto">Cancella</button>
+              </div>
+            </div>
+
+            <!-- TextArea per l'inserimento ChordPro -->
+            <textarea id="edit-lyrics" rows="12" placeholder="Scrivi qui il testo con gli accordi. Esempio:
+[Do]Al[Sol]leluia, [Fa]lode a [Do]Te!
+[Fa]Tu sei la [Do]via, [Re]verità e [Sol]vita!"></textarea>
+
+            <!-- Preview Live in tempo reale -->
+            <div class="editor-preview-container">
+              <label>Anteprima in tempo reale</label>
+              <div class="editor-preview" id="editor-preview">
+                <p class="preview-empty">Inizia a scrivere per vedere l'anteprima...</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pulsante di eliminazione in fondo alla modifica -->
+          <div class="form-footer" id="edit-form-footer" style="display: none;">
+            <button type="button" id="btn-delete-song" class="btn-danger">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              Elimina questo brano permanentemente
+            </button>
+          </div>
+
+        </form>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="jszip.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1679 @@
+/* ==========================================================================
+   CANTICO - STYLE SHEET (Luminous & Light Music Theme)
+   Optimized for iPad (music stand) and Mac. Warm Ivory and Gold theme.
+   ========================================================================== */
+
+:root {
+  /* Color Palette (Modern Slate & Indigo) */
+  --bg-primary: #f8fafc;        /* Clean soft light grey */
+  --bg-secondary: #ffffff;      /* Pure white for headers/menus */
+  --bg-tertiary: #f1f5f9;       /* Light grey for hover and structural areas */
+  --border-color: #e2e8f0;      /* Clean thin slate border */
+  
+  --text-primary: #0f172a;      /* Sharp dark slate */
+  --text-secondary: #475569;    /* Medium slate for secondary text */
+  --text-muted: #94a3b8;        /* Muted slate for placeholders */
+  
+  --accent-color: #4f46e5;      /* Vibrant Indigo */
+  --accent-hover: #4338ca;
+  --accent-light: #f0fdf4;
+  --accent-rgb: 79, 70, 229;
+  
+  --danger-color: #ef4444;
+  --danger-hover: #dc2626;
+  --success-color: #10b981;
+  
+  /* Sidebar Width */
+  --sidebar-width: 360px;
+  
+  /* Font Families */
+  --font-serif: 'Plus Jakarta Sans', Georgia, "Times New Roman", Times, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  
+  /* Liturgy Moments Colors (Modern vibrant pastel palette) */
+  --moment-ingresso: #10b981;      /* Emerald */
+  --moment-penitenziale: #f59e0b;  /* Amber */
+  --moment-gloria: #3b82f6;        /* Blue */
+  --moment-salmo: #8b5cf6;         /* Violet */
+  --moment-offertorio: #ec4899;     /* Pink */
+  --moment-santo: #ef4444;          /* Red */
+  --moment-comunione: #06b6d4;      /* Cyan */
+  --moment-congedo: #14b8a6;        /* Teal */
+  
+  /* Leggio Config (dynamic via JS) */
+  --lyric-font-size: 19px;
+  
+  /* Modern Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+
+/* Base resets and Layout */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  height: 100vh;
+  overflow: hidden;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Sidebar Styles (Light Theme)
+   ========================================================================== */
+
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background-color: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease;
+  z-index: 100;
+}
+
+.sidebar-header {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-brand {
+  width: 26px;
+  height: 26px;
+  color: var(--accent-color);
+}
+
+.brand h1 {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+/* Buttons */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: all 0.2s ease;
+}
+
+.btn-primary-icon {
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+.btn-primary-icon:hover {
+  background-color: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 8px rgba(var(--accent-rgb), 0.2);
+}
+
+.btn-primary-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Search Area */
+.search-container {
+  padding: 16px 20px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 12px 10px 38px;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.search-box input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
+}
+
+.btn-filter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.btn-filter.active {
+  background-color: var(--accent-light);
+  border-color: var(--accent-color);
+  color: var(--accent-hover);
+}
+
+.btn-filter.active svg {
+  fill: var(--accent-color);
+  stroke: var(--accent-color);
+}
+
+.btn-filter svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Liturgy Moments Selector */
+.liturgy-moments-section {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.liturgy-moments-section h3 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.moments-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.btn-moment-filter {
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: left;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+}
+
+.btn-moment-filter::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--moment-color);
+  flex-shrink: 0;
+}
+
+.btn-moment-filter.active {
+  background-color: var(--moment-color);
+  border-color: var(--moment-color);
+  color: white;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+}
+
+.btn-moment-filter.active::before {
+  background-color: white;
+}
+
+/* Song List */
+.songs-list-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 16px 0;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px 12px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.btn-text {
+  font-size: 0.85rem;
+  color: var(--accent-hover);
+  font-weight: 600;
+}
+
+.btn-text:hover {
+  text-decoration: underline;
+}
+
+.songs-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.list-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* Song Cards */
+.song-card {
+  padding: 16px;
+  border-radius: 12px;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  text-align: left;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.song-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+
+.song-card.active {
+  border-color: var(--accent-color);
+  background-color: var(--accent-light);
+  box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.1);
+}
+
+.song-card-num {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.song-card.active .song-card-num {
+  background-color: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+.song-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.song-card-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.song-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon-star-filled {
+  width: 16px;
+  height: 16px;
+  fill: var(--accent-color);
+  stroke: var(--accent-color);
+  flex-shrink: 0;
+}
+
+.song-card-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-card-moments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Sidebar Footer (Backup) */
+.sidebar-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 8px;
+  background-color: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.btn-sidebar-action {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 4px;
+  background-color: var(--bg-tertiary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.btn-sidebar-action:hover {
+  background-color: var(--accent-light);
+  color: var(--accent-hover);
+  border-color: var(--accent-color);
+}
+
+.btn-sidebar-action svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ==========================================================================
+   Main Content Panels
+   ========================================================================== */
+
+.main-content {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+/* View Panel (Leggio) */
+.view-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.search-container {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.song-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-secondary);
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.btn-toggle-sidebar {
+  display: none;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-toggle-sidebar svg {
+  width: 22px;
+  height: 22px;
+}
+
+.song-identity {
+  flex: 1;
+  min-width: 0;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+
+.song-number-badge {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  background-color: var(--bg-tertiary);
+  color: var(--accent-hover);
+  border: 1px solid var(--border-color);
+  padding: 3px 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.song-identity h2 {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-favorite-toggle {
+  color: var(--text-muted);
+}
+
+.btn-favorite-toggle:hover {
+  color: var(--accent-color);
+  transform: scale(1.1);
+}
+
+.btn-favorite-toggle.active {
+  color: var(--accent-color);
+}
+
+.btn-favorite-toggle.active svg {
+  fill: var(--accent-color);
+  stroke: var(--accent-color);
+}
+
+.btn-favorite-toggle svg {
+  width: 24px;
+  height: 24px;
+}
+
+.song-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.song-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.song-moments-badges {
+  display: flex;
+  gap: 6px;
+}
+
+.badge-moment {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.btn-secondary {
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-secondary:not(:disabled):hover {
+  background-color: var(--accent-light);
+  border-color: var(--accent-color);
+  color: var(--accent-hover);
+}
+
+.btn-secondary svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Leggio Toolbar (Controls for reading/singing) */
+.leggio-toolbar {
+  padding: 12px 24px;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toolbar-group label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+}
+
+/* Tabs: Testo vs Spartito */
+.toggle-view-group {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  gap: 0;
+  background: white;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-radius: 6px;
+}
+
+.tab-btn.active {
+  background-color: var(--accent-color);
+  color: white;
+  box-shadow: 0 2px 6px rgba(var(--accent-rgb), 0.2);
+}
+
+/* Counter Control (Transpose) */
+.counter-control {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+}
+
+.btn-counter {
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-counter:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.counter-value {
+  width: 32px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-hover);
+}
+
+/* Zoom Control */
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-zoom {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.btn-zoom:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+}
+
+.zoom-controls input[type="range"] {
+  width: 100px;
+  accent-color: var(--accent-color);
+}
+
+/* Autoscroll Control */
+.btn-play {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+}
+
+.btn-play.scrolling {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: white;
+  box-shadow: 0 2px 6px rgba(var(--accent-rgb), 0.2);
+}
+
+.btn-play svg {
+  width: 14px;
+  height: 14px;
+}
+
+.autoscroll-group input[type="range"] {
+  width: 80px;
+  accent-color: var(--accent-color);
+}
+
+/* Leggio Viewport (The viewport scrolling area) */
+.leggio-viewport {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  scroll-behavior: smooth;
+  background-color: var(--bg-primary);
+}
+
+/* Welcome Screen */
+.welcome-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+  background-color: var(--bg-primary);
+}
+
+.welcome-icon {
+  width: 70px;
+  height: 70px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.welcome-screen h2 {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.welcome-screen p {
+  color: var(--text-secondary);
+  max-width: 440px;
+  margin-bottom: 24px;
+  font-size: 1.05rem;
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 10px rgba(var(--accent-rgb), 0.2);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(var(--accent-rgb), 0.3);
+}
+
+/* ==========================================================================
+   ChordPro Rendering Engine Styling (Leggio Sheet Music Look)
+   ========================================================================== */
+
+.song-sheet-lyrics {
+  padding: 40px 50px 120px; /* Generous margins for classical layout */
+  background-color: var(--bg-primary);
+}
+
+.lyrics-render {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.chordpro-song {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Individual line of lyrics */
+.song-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  font-size: var(--lyric-font-size);
+}
+
+.song-line.lyric-only {
+  min-height: 1.5em;
+  color: var(--text-primary);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.song-empty-line {
+  height: 1.4em;
+}
+
+/* Directives */
+.song-comment {
+  font-size: 0.85em;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin: 10px 0;
+  padding-left: 12px;
+  border-left: 2px solid var(--accent-color);
+}
+
+.song-chorus-start {
+  font-family: var(--font-serif);
+  font-size: 0.85em;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--accent-hover);
+  letter-spacing: 0.06em;
+  margin-top: 14px;
+}
+
+.song-chorus {
+  border-left: 2.5px solid var(--accent-color);
+  padding-left: 18px;
+  margin: 6px 0 16px;
+}
+
+/* The chord-lyric column engine (Alignment Magic) */
+.chord-group {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: bottom;
+  position: relative;
+}
+
+.chord-name {
+  font-family: var(--font-sans);
+  font-size: 0.82em;
+  font-weight: 700;
+  color: var(--accent-hover); /* Elegant gold/amber chord names */
+  height: 1.45em;
+  line-height: 1.45;
+  white-space: nowrap;
+  user-select: none;
+  display: inline-block;
+}
+
+.chord-name.empty {
+  visibility: hidden;
+}
+
+.lyric-text {
+  line-height: 1.5;
+  white-space: pre;
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   Sheet Image Panel
+   ========================================================================== */
+
+.song-sheet-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-secondary);
+}
+
+.image-zoom-container {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 30px;
+}
+
+.image-zoom-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+  border: 1px solid var(--border-color);
+  background-color: white;
+}
+
+.sheet-no-image {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  gap: 14px;
+  padding: 40px;
+  text-align: center;
+}
+
+.sheet-no-image svg {
+  width: 50px;
+  height: 50px;
+  color: var(--text-muted);
+}
+
+.btn-text-action {
+  color: var(--accent-hover);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-bottom: 1.5px dashed var(--accent-color);
+  padding-bottom: 2px;
+}
+
+.btn-text-action:hover {
+  color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ==========================================================================
+   Edit Panel (Create and Modify Songs)
+   ========================================================================== */
+
+.edit-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: var(--bg-primary);
+}
+
+.edit-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-secondary);
+}
+
+.edit-header h2 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.edit-header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-outline {
+  border: 1px solid var(--border-color);
+  background-color: white;
+  color: var(--text-secondary);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.btn-outline:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.edit-form {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row.split {
+  flex-direction: row;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group.flex-1 { flex: 1; }
+.form-group.flex-2 { flex: 2; }
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
+}
+
+/* Moments Multiple Selector */
+.edit-moments-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.moment-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.moment-checkbox-label input[type="checkbox"] {
+  accent-color: var(--moment-color);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.moment-checkbox-label:hover {
+  color: var(--text-primary);
+}
+
+.moment-color-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--moment-color);
+}
+
+/* Sheet Upload Area */
+.sheet-upload-area {
+  background-color: white;
+  border: 2px dashed var(--border-color);
+  border-radius: 10px;
+  padding: 26px;
+  text-align: center;
+  position: relative;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
+}
+
+.sheet-upload-area.dragover {
+  border-color: var(--accent-color);
+  background-color: var(--accent-light);
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.upload-placeholder svg {
+  width: 32px;
+  height: 32px;
+  color: var(--accent-color);
+}
+
+.upload-placeholder p span {
+  color: var(--accent-hover);
+  font-weight: 600;
+}
+
+.upload-tip {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.upload-preview {
+  position: relative;
+  max-width: 300px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  border: 1px solid var(--border-color);
+}
+
+.upload-preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.btn-danger-floating {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(211, 47, 47, 0.9);
+  color: white;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.btn-danger-floating:hover {
+  background-color: var(--danger-hover);
+  transform: scale(1.05);
+}
+
+.btn-danger-floating svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Editor Specifics */
+.editor-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.help-tip {
+  font-size: 0.75rem;
+  color: var(--accent-hover);
+  cursor: help;
+  border-bottom: 1.5px dashed var(--accent-color);
+}
+
+/* Chords Keyboard (Light & Elegant Keys) */
+.chords-keyboard {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.keyboard-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.kbd-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  width: 90px;
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
+}
+
+.kbd-btn {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 40px;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+.kbd-btn:hover {
+  background-color: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+  box-shadow: 0 2px 6px rgba(var(--accent-rgb), 0.15);
+}
+
+.kbd-btn.modifier {
+  background-color: #faf9f6;
+  color: var(--text-secondary);
+}
+
+.kbd-btn.tool {
+  background-color: white;
+  border-color: var(--accent-color);
+  color: var(--accent-hover);
+}
+
+.kbd-btn.tool:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.kbd-btn.tool.danger {
+  border-color: rgba(211, 47, 47, 0.4);
+  color: var(--danger-color);
+}
+
+.kbd-btn.tool.danger:hover {
+  background-color: var(--danger-color);
+  color: white;
+  border-color: var(--danger-color);
+}
+
+.edit-form textarea {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: vertical;
+  background-color: white;
+}
+
+/* Editor Preview Section */
+.editor-preview-container {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.editor-preview {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 18px;
+  min-height: 120px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.preview-empty {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.form-footer {
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-danger {
+  background-color: white;
+  color: var(--danger-color);
+  border: 1px solid rgba(211, 47, 47, 0.4);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+}
+
+.btn-danger:hover {
+  background-color: var(--danger-color);
+  color: white;
+  border-color: var(--danger-color);
+}
+
+.btn-danger svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ==========================================================================
+   Responsive Rules
+   ========================================================================== */
+
+/* Medium devices (iPad landscape, Desktop) */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 320px;
+  }
+}
+
+/* Small devices (iPad Portrait, Tablets) */
+@media (max-width: 820px) {
+  .app-container {
+    flex-direction: row;
+  }
+  
+  .sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .app-container.sidebar-hidden .sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .btn-toggle-sidebar {
+    display: flex;
+  }
+  
+  .form-row.split {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+/* Extra Small (Mobile Phones) */
+@media (max-width: 480px) {
+  :root {
+    --sidebar-width: 85vw;
+  }
+  
+  .leggio-toolbar {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  
+  .toolbar-group {
+    flex: 1 1 40%;
+    justify-content: space-between;
+  }
+  
+  .toggle-view-group {
+    flex: 1 1 100%;
+  }
+  
+  .song-header {
+    padding: 12px;
+  }
+  
+  .song-identity h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* ==========================================================================
+   Schermo Intero & Miglioramenti Vista Tablet
+   ========================================================================== */
+
+/* Stato Schermo Intero Attivo (Virtuale o Nativo) */
+body.fullscreen-active {
+  overflow: hidden;
+}
+
+body.fullscreen-active .sidebar {
+  display: none !important;
+}
+
+body.fullscreen-active .song-header {
+  display: none !important;
+}
+
+body.fullscreen-active .main-content {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+}
+
+body.fullscreen-active .view-panel {
+  width: 100vw !important;
+  height: 100vh !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+body.fullscreen-active .leggio-viewport {
+  height: calc(100vh - 65px) !important;
+  border-radius: 0 !important;
+}
+
+/* Evita che scroll-behavior smooth interferisca con gli incrementi millimetrici dell'autoscroll */
+.leggio-viewport.autoscrolling {
+  scroll-behavior: auto !important;
+}
+
+/* Layout a Due Colonne per testo e accordi */
+.lyrics-render.two-columns {
+  max-width: 1100px !important;
+}
+
+.lyrics-render.two-columns .chordpro-song {
+  column-count: 2 !important;
+  column-gap: 50px !important;
+  column-rule: 1px dashed var(--border-color) !important;
+}
+
+/* Impediamo che righe, commenti o ritornelli vengano spezzati a metà colonna */
+.lyrics-render.two-columns .song-line,
+.lyrics-render.two-columns .song-comment,
+.lyrics-render.two-columns .song-chorus-start,
+.lyrics-render.two-columns .song-chorus,
+.lyrics-render.two-columns .song-empty-line {
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+/* Effetto pulsante attivo (es. per due colonne) */
+.btn-secondary.active {
+  background-color: var(--accent-light) !important;
+  color: var(--accent-hover) !important;
+  border-color: var(--accent-color) !important;
+}
+
+/* Duplicazione ed estetizzazione bottoni welcome in griglia */
+.welcome-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.welcome-actions button {
+  min-width: 180px;
+}
+
+/* Vista ad altezza ridotta (es. iPad orizzontale o Mobile orizzontale) */
+@media (max-height: 600px) {
+  .liturgy-moments-section {
+    padding: 8px 16px;
+  }
+  
+  .liturgy-moments-section h3 {
+    margin-bottom: 6px;
+    font-size: 0.7rem;
+  }
+
+  /* Trasforma la griglia verticale in riga scrollabile orizzontalmente */
+  .moments-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    gap: 8px !important;
+    padding-bottom: 8px !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  
+  .btn-moment-filter {
+    flex: 0 0 auto !important;
+    padding: 6px 10px !important;
+    font-size: 0.75rem !important;
+  }
+}
+
+/* ==========================================================================
+   Gestione Zoom Touch & Ottimizzazioni per Tablet
+   ========================================================================== */
+
+/* Disabilita il doppio tocco per lo zoom lasciando attivo lo zoom manuale a due dita (pinch) */
+html, body, .app-container, .leggio-viewport, .image-zoom-container, .song-sheet-lyrics, .lyrics-render, img, button, a, .btn-sidebar-action, .btn-secondary, .btn-zoom, .btn-play {
+  touch-action: manipulation;
+}
+
+/* Ottimizzazione Tablet & Schermi Compatti */
+@media (max-width: 1024px) {
+  /* Riduciamo l'header del canto */
+  .song-header {
+    padding: 8px 14px;
+    gap: 10px;
+  }
+
+  .song-identity h2 {
+    font-size: 1.1rem;
+  }
+
+  .song-number-badge {
+    padding: 3px 6px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+  }
+
+  /* Tasti in alto compatti (sola icona per risparmiare spazio) */
+  .song-actions button span {
+    display: none !important;
+  }
+
+  .song-actions button {
+    padding: 8px !important;
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Barra degli strumenti (toolbar) del leggio compatta */
+  .leggio-toolbar {
+    padding: 6px 10px;
+    gap: 8px;
+    justify-content: space-between;
+  }
+
+  /* Nascondiamo le etichette per massimizzare la pulizia e lo spazio */
+  .toolbar-group label {
+    display: none !important;
+  }
+
+  /* Sliders compatti e stretti */
+  .zoom-controls input[type="range"] {
+    width: 60px;
+  }
+
+  .autoscroll-group input[type="range"] {
+    width: 50px;
+  }
+
+  /* Tasto play autoscroll compatto con sola icona */
+  .btn-play span {
+    display: none !important;
+  }
+
+  .btn-play {
+    padding: 8px !important;
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Tasto Schermo Intero compatto nella toolbar */
+  .fullscreen-group button span {
+    display: none !important;
+  }
+
+  .fullscreen-group button {
+    padding: 8px !important;
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .toggle-view-group {
+    padding: 2px;
+  }
+  
+  .tab-btn {
+    padding: 6px 10px;
+    font-size: 0.78rem;
+  }
+}
+
+

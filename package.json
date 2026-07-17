@@ -1,0 +1,18 @@
+{
+  "name": "cantico",
+  "version": "1.0.0",
+  "description": "Leggio Liturgico per iPad e Mac",
+  "main": "app.js",
+  "scripts": {
+    "start": "npx -y http-server -p 8080 -c-1"
+  },
+  "keywords": [
+    "canti",
+    "liturgia",
+    "leggio",
+    "chordpro",
+    "ipad"
+  ],
+  "author": "",
+  "license": "MIT"
+}
